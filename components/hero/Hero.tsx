@@ -51,7 +51,7 @@ export function Hero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center px-6 pt-28 text-center md:pt-32">
+      <div className="relative z-10 flex flex-col items-center px-4 pt-24 pb-20 text-center sm:px-6 md:pt-32 md:pb-10">
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -84,7 +84,7 @@ export function Hero() {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display text-5xl font-light leading-none md:text-7xl lg:text-[6.5rem]"
+            className="font-display text-3xl font-light leading-none sm:text-5xl md:text-7xl lg:text-[6.5rem]"
           >
             <span className="gold-text-shimmer">Anukriti</span>
           </motion.h1>
@@ -114,7 +114,7 @@ export function Hero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display text-5xl font-light leading-none md:text-7xl lg:text-[6.5rem]"
+            className="font-display text-3xl font-light leading-none sm:text-5xl md:text-7xl lg:text-[6.5rem]"
           >
             <span className="gold-text-shimmer">Anmol</span>
           </motion.h1>

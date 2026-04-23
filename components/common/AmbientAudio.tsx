@@ -5,8 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 
 const AUDIO_SRC = "/audio/Aaj Sajeya - Goldie Sohel 320 Kbps.mp3";
-const FADE_DURATION = 2; // seconds
 const TARGET_VOLUME = 0.35;
+const FADE_STEPS = 20;
+const FADE_INTERVAL = 80; // ms per step
 
 interface AmbientAudioProps {
   started: boolean;
@@ -14,89 +15,104 @@ interface AmbientAudioProps {
 
 export function AmbientAudio({ started }: AmbientAudioProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const gainRef = useRef<GainNode | null>(null);
-  const ctxRef = useRef<AudioContext | null>(null);
-  const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
+  const fadeTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [muted, setMuted] = useState(false);
+  const [ready, setReady] = useState(false);
 
-  // Initialize audio context + element on first start
+  // Create audio element once
   useEffect(() => {
-    if (!started) return;
-    if (typeof window === "undefined") return;
+    if (!started || typeof window === "undefined") return;
 
-    // Create audio element if not yet created
     if (!audioRef.current) {
-      const audio = new Audio(AUDIO_SRC);
+      const audio = new Audio();
       audio.loop = true;
       audio.preload = "auto";
+      audio.volume = 0;
+      audio.setAttribute("playsinline", "true");
+      audio.src = AUDIO_SRC;
       audioRef.current = audio;
+
+      // Mark ready once we can play
+      const onCanPlay = () => setReady(true);
+      audio.addEventListener("canplaythrough", onCanPlay, { once: true });
+      audio.load();
     }
+  }, [started]);
 
-    // Create Web Audio context for smooth fade control
-    if (!ctxRef.current) {
-      const AudioContextClass =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext })
-          .webkitAudioContext;
-      if (!AudioContextClass) return;
+  // Handle play/pause with fade
+  useEffect(() => {
+    if (!started || !ready) return;
+    const audio = audioRef.current;
+    if (!audio) return;
 
-      const ctx = new AudioContextClass();
-      ctxRef.current = ctx;
-
-      const source = ctx.createMediaElementSource(audioRef.current!);
-      sourceRef.current = source;
-
-      const gain = ctx.createGain();
-      gain.gain.value = 0;
-      gainRef.current = gain;
-
-      source.connect(gain);
-      gain.connect(ctx.destination);
-    }
-
-    const ctx = ctxRef.current!;
-    const gain = gainRef.current!;
-    const audio = audioRef.current!;
-
-    // Resume context (needed after user gesture)
-    if (ctx.state === "suspended") {
-      ctx.resume();
+    // Clear any ongoing fade
+    if (fadeTimerRef.current) {
+      clearInterval(fadeTimerRef.current);
+      fadeTimerRef.current = null;
     }
 
     if (!muted) {
-      // Fade in
-      audio.play().catch(() => {
-        // Autoplay blocked — will retry on next user interaction
-      });
-      gain.gain.cancelScheduledValues(ctx.currentTime);
-      gain.gain.setValueAtTime(gain.gain.value, ctx.currentTime);
-      gain.gain.linearRampToValueAtTime(
-        TARGET_VOLUME,
-        ctx.currentTime + FADE_DURATION
-      );
+      // Play and fade in
+      const playPromise = audio.play();
+      if (playPromise) {
+        playPromise.catch(() => {
+          // Autoplay blocked — user will tap the button to unmute
+        });
+      }
+
+      const startVol = audio.volume;
+      const diff = TARGET_VOLUME - startVol;
+      let step = 0;
+
+      fadeTimerRef.current = setInterval(() => {
+        step++;
+        const progress = step / FADE_STEPS;
+        audio.volume = Math.min(
+          TARGET_VOLUME,
+          startVol + diff * progress
+        );
+        if (step >= FADE_STEPS) {
+          clearInterval(fadeTimerRef.current!);
+          fadeTimerRef.current = null;
+          audio.volume = TARGET_VOLUME;
+        }
+      }, FADE_INTERVAL);
     } else {
-      // Fade out
-      gain.gain.cancelScheduledValues(ctx.currentTime);
-      gain.gain.setValueAtTime(gain.gain.value, ctx.currentTime);
-      gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.5);
-      setTimeout(() => {
-        audio.pause();
-      }, 600);
+      // Fade out then pause
+      const startVol = audio.volume;
+      let step = 0;
+
+      fadeTimerRef.current = setInterval(() => {
+        step++;
+        const progress = step / FADE_STEPS;
+        audio.volume = Math.max(0, startVol * (1 - progress));
+        if (step >= FADE_STEPS) {
+          clearInterval(fadeTimerRef.current!);
+          fadeTimerRef.current = null;
+          audio.volume = 0;
+          audio.pause();
+        }
+      }, FADE_INTERVAL / 2); // Fade out faster
     }
 
     return () => {
-      // Cleanup on unmount
-      try {
-        gain.gain.cancelScheduledValues(ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.4);
-        setTimeout(() => {
-          audio.pause();
-        }, 500);
-      } catch {
-        // ignore
+      if (fadeTimerRef.current) {
+        clearInterval(fadeTimerRef.current);
+        fadeTimerRef.current = null;
       }
     };
-  }, [started, muted]);
+  }, [started, muted, ready]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (fadeTimerRef.current) clearInterval(fadeTimerRef.current);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+      }
+    };
+  }, []);
 
   const toggleMute = useCallback(() => {
     setMuted((m) => !m);

@@ -147,7 +147,7 @@ export function InvitationBox({ onOpen }: InvitationBoxProps) {
                   >
                     Together with the Sahani & families
                   </motion.p>
-                  <h1 className="mt-3 font-script text-5xl text-transparent gold-text-shimmer md:text-7xl">
+                  <h1 className="mt-3 font-script text-3xl text-transparent gold-text-shimmer sm:text-5xl md:text-7xl">
                     Anukriti <span className="font-serif italic">&</span> Anmol
                   </h1>
                   <div className="mt-5">

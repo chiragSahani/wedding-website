@@ -387,13 +387,14 @@ html, body {
   }
 
   /* Tighter heading on mobile */
-  h2 {
-    font-size: 2rem !important;
-    line-height: 1.2 !important;
+  section > div h2 {
+    font-size: 1.75rem;
+    line-height: 1.2;
   }
 
-  /* Better touch targets */
-  button, a {
+  /* Better touch targets for standalone buttons */
+  button:not(nav button),
+  a[href^="#rsvp"] {
     min-height: 44px;
   }
 
