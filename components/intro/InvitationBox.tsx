@@ -6,9 +6,12 @@ import { BrandHashtag, WeddingLogo } from "@/components/common/WeddingBrand";
 
 interface InvitationBoxProps {
   onOpen: () => void;
+  /** Fired synchronously on the user's tap, before the exit animation. Use
+   *  this to unlock audio inside the browser's user-gesture window. */
+  onTap?: () => void;
 }
 
-export function InvitationBox({ onOpen }: InvitationBoxProps) {
+export function InvitationBox({ onOpen, onTap }: InvitationBoxProps) {
   const [opened, setOpened] = useState(false);
   const [exiting, setExiting] = useState(false);
 
@@ -124,7 +127,13 @@ export function InvitationBox({ onOpen }: InvitationBoxProps) {
                   : { duration: 6, ease: "easeInOut", repeat: Infinity }
               }
             >
-              <Box3D opened={opened} onOpen={() => setOpened(true)} />
+              <Box3D
+                opened={opened}
+                onOpen={() => {
+                  onTap?.(); // fire immediately within the gesture
+                  setOpened(true);
+                }}
+              />
             </motion.div>
 
             <AnimatePresence>
