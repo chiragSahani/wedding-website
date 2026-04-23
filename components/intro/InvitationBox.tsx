@@ -109,14 +109,18 @@ export function InvitationBox({ onOpen }: InvitationBoxProps) {
               ))}
           </AnimatePresence>
 
-          <div className="relative perspective-1000">
+          <div className="relative perspective-1000 w-full flex flex-col items-center">
             <motion.div
               className="relative preserve-3d"
               initial={{ rotateY: -20, rotateX: 10 }}
-              animate={opened ? { rotateX: 0, scale: 1.25 } : { rotateY: [-12, 12, -12], rotateX: 6 }}
+              animate={
+                opened
+                  ? { rotateX: 0, scale: 0.6, opacity: 0 }
+                  : { rotateY: [-12, 12, -12], rotateX: 6 }
+              }
               transition={
                 opened
-                  ? { duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }
+                  ? { duration: 1, ease: [0.34, 1.56, 0.64, 1] }
                   : { duration: 6, ease: "easeInOut", repeat: Infinity }
               }
             >
@@ -129,34 +133,36 @@ export function InvitationBox({ onOpen }: InvitationBoxProps) {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.4, duration: 0.9, ease: "easeOut" }}
-                  className="pointer-events-none absolute left-1/2 top-1/2 w-[min(90vw,700px)] -translate-x-1/2 -translate-y-1/2 text-center"
+                  className="pointer-events-none absolute inset-0 flex items-center justify-center px-6"
                 >
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 1.35, duration: 0.7, ease: "easeOut" }}
-                    className="mb-5 flex justify-center"
-                  >
-                    <WeddingLogo size="md" priority animated={false} />
-                  </motion.div>
-                  <motion.p
-                    initial={{ letterSpacing: "0.1em", opacity: 0 }}
-                    animate={{ letterSpacing: "0.4em", opacity: 1 }}
-                    transition={{ delay: 1.6, duration: 1.2 }}
-                    className="font-serif text-xs uppercase text-champagne-200/80"
-                  >
-                    Together with the Sahani & families
-                  </motion.p>
-                  <h1 className="mt-3 font-script text-3xl text-transparent gold-text-shimmer sm:text-5xl md:text-7xl">
-                    Anukriti <span className="font-serif italic">&</span> Anmol
-                  </h1>
-                  <div className="mt-5">
-                    <BrandHashtag />
-                  </div>
-                  <div className="mt-4 divider-ornate">
-                    <span className="font-serif text-xs italic tracking-[0.4em] text-gold-foil/80">
-                      ✦ INVITE YOU ✦
-                    </span>
+                  <div className="w-full max-w-[500px] text-center">
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 1.35, duration: 0.7, ease: "easeOut" }}
+                      className="mb-5 flex justify-center"
+                    >
+                      <WeddingLogo size="md" priority animated={false} />
+                    </motion.div>
+                    <motion.p
+                      initial={{ letterSpacing: "0.1em", opacity: 0 }}
+                      animate={{ letterSpacing: "0.25em", opacity: 1 }}
+                      transition={{ delay: 1.6, duration: 1.2 }}
+                      className="font-serif text-[0.65rem] uppercase text-champagne-200/80 sm:text-xs"
+                    >
+                      Together with the Sahani & families
+                    </motion.p>
+                    <h1 className="mt-3 font-script text-3xl text-transparent gold-text-shimmer sm:text-5xl md:text-7xl">
+                      Anukriti <span className="font-serif italic">&</span> Anmol
+                    </h1>
+                    <div className="mt-4">
+                      <BrandHashtag />
+                    </div>
+                    <div className="mt-4 divider-ornate">
+                      <span className="font-serif text-xs italic tracking-[0.3em] text-gold-foil/80">
+                        ✦ INVITE YOU ✦
+                      </span>
+                    </div>
                   </div>
                 </motion.div>
               )}
