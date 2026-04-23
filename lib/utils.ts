@@ -10,8 +10,8 @@ export const WEDDING_DATE = new Date("2026-05-05T20:00:00+05:30");
 export const EVENTS = [
   {
     id: "sangeet",
-    name: "Ladies Sangeet",
-    tagline: "A Night of Music, Lights & Love",
+    name: "Sangeet Night",
+    tagline: "Night of Music, Lights & Love",
     date: "Monday · 4 May 2026",
     time: "6:00 PM onwards",
     location: "Purvi Khera, Bypass Road, Gaulapar, Uttarakhand – 263139",
@@ -25,6 +25,25 @@ export const EVENTS = [
       "LED Dance Floor",
       "Cocktail & Mocktail Zone",
       "Premium Selfie Booth",
+    ],
+  },
+  {
+    id: "GadarPur",
+    name: "Haldi & Chooda Ceremony",
+    tagline: "Day of Yellow, Blessings & Joy",
+    date: "Tuesday · 5 May 2026",
+    time: "11:00 AM onwards",
+    location: "Gadarpur-Gularbhoj Road, Awas Vikas Colony, Gadarpur, Uttarakhand – 263152",
+    venue: "Shehnai Vatika",
+    dressCode: "Festive Ethnic · Bright & Vibrant",
+    accent: "haldi",
+    highlights: [
+      "Haldi Rituals",
+      "Chooda Ceremony",
+      "Family Blessings",
+      "Floral Décor",
+      "Festive Feast",
+      "Fun & Laughter",
     ],
   },
   {

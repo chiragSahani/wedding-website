@@ -13,9 +13,9 @@ const MARQUEE_DURATION_ROW1 = "40s";
 const MARQUEE_DURATION_ROW2 = "45s";
 
 /* Duplicate items enough to fill the marquee seamlessly */
-const row1 = [...ITEMS, ...ITEMS, ...ITEMS];
+const row1 = [...ITEMS, ...ITEMS];
 const row2Shuffled = [...ITEMS.slice(4), ...ITEMS.slice(0, 4)];
-const row2 = [...row2Shuffled, ...row2Shuffled, ...row2Shuffled];
+const row2 = [...row2Shuffled, ...row2Shuffled];
 
 export function Gallery() {
   const [active, setActive] = useState<CouplePhoto | null>(null);

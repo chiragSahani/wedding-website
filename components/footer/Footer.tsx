@@ -72,26 +72,6 @@ function CornerOrnament({ className }: { className?: string }) {
   );
 }
 
-function FloatingParticle({ delay, x, y, size }: { delay: number; x: string; y: string; size: number }) {
-  return (
-    <motion.div
-      aria-hidden
-      className="absolute rounded-full bg-gold-foil/30"
-      style={{ left: x, top: y, width: size, height: size }}
-      animate={{
-        y: [0, -20, 0],
-        opacity: [0.15, 0.5, 0.15],
-        scale: [1, 1.3, 1],
-      }}
-      transition={{
-        duration: 4 + delay,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay,
-      }}
-    />
-  );
-}
 
 /* ---------- Main Footer ---------- */
 
@@ -128,15 +108,6 @@ export function Footer() {
       <CornerOrnament className="pointer-events-none absolute top-6 right-6 h-20 w-20 -scale-x-100 text-gold-foil/25 md:h-28 md:w-28" />
       <CornerOrnament className="pointer-events-none absolute bottom-6 left-6 h-20 w-20 -scale-y-100 text-gold-foil/25 md:h-28 md:w-28" />
       <CornerOrnament className="pointer-events-none absolute bottom-6 right-6 h-20 w-20 -scale-x-100 -scale-y-100 text-gold-foil/25 md:h-28 md:w-28" />
-
-      {/* Floating particles */}
-      <FloatingParticle delay={0} x="12%" y="20%" size={3} />
-      <FloatingParticle delay={1.2} x="85%" y="30%" size={2} />
-      <FloatingParticle delay={0.6} x="25%" y="70%" size={4} />
-      <FloatingParticle delay={2} x="72%" y="65%" size={2.5} />
-      <FloatingParticle delay={1.5} x="50%" y="15%" size={3} />
-      <FloatingParticle delay={0.8} x="38%" y="80%" size={2} />
-      <FloatingParticle delay={1.8} x="65%" y="45%" size={3.5} />
 
       {/* Decorative top border line */}
       <div aria-hidden className="absolute inset-x-0 top-0 flex justify-center">

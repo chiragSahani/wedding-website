@@ -8,7 +8,6 @@ import { BrandHashtag, WeddingLogo } from "@/components/common/WeddingBrand";
 const NAV_ITEMS = [
   { href: "#hero", label: "Home" },
   { href: "#events", label: "Events" },
-  { href: "#sangeet", label: "Sangeet" },
   { href: "#location", label: "Venue" },
   { href: "#gallery", label: "Gallery" },
   { href: "#blessings", label: "Blessings" },
