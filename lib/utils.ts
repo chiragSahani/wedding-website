@@ -1,0 +1,49 @@
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export const WEDDING_DATE = new Date("2026-05-05T20:00:00+05:30");
+
+export const EVENTS = [
+  {
+    id: "sangeet",
+    name: "Ladies Sangeet",
+    tagline: "A Night of Music, Lights & Love",
+    date: "Monday · 4 May 2026",
+    time: "6:00 PM onwards",
+    location: "Purvi Khera, Bypass Road, Gaulapar, Uttarakhand – 263139",
+    venue: "R.K. Banquet & Guest House",
+    dressCode: "Indo-Western Glam · Jewel Tones",
+    accent: "emerald",
+    highlights: [
+      "Live Dhol Welcome",
+      "Family Performances",
+      "DJ Night",
+      "LED Dance Floor",
+      "Cocktail & Mocktail Zone",
+      "Premium Selfie Booth",
+    ],
+  },
+  {
+    id: "barat",
+    name: "Welcome of Barat",
+    tagline: "The Royal Procession",
+    date: "Tuesday · 5 May 2026",
+    time: "8:00 PM onwards",
+    location: "Gadarpur-Gularbhoj Road, Awas Vikas Colony, Gadarpur, Uttarakhand – 263152",
+    venue: "Shehnai Vatika",
+    dressCode: "Regal Ethnic · Sherwani · Lehenga · Saree",
+    accent: "burgundy",
+    highlights: [
+      "Grand Entry",
+      "Band Baaja · Shehnai",
+      "Horses & Luxury Car",
+      "Sky Fireworks",
+      "Family Procession",
+      "Welcome Gate",
+    ],
+  },
+] as const;
