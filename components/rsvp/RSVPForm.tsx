@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Check, Heart, User, Users, UtensilsCrossed } from "lucide-react";
+import { Sparkles, Check, Heart, User, Users } from "lucide-react";
 import { OrnateDivider } from "@/components/common/OrnateDivider";
 import { MagneticButton } from "@/components/common/MagneticButton";
 import { BrandHashtag, SectionBrandMark, WeddingLogo } from "@/components/common/WeddingBrand";
@@ -12,7 +12,6 @@ interface FormState {
   guests: string;
   attendingSangeet: "yes" | "no" | "maybe";
   attendingBarat: "yes" | "no" | "maybe";
-  food: "veg" | "non-veg" | "jain";
   message: string;
 }
 
@@ -21,7 +20,6 @@ const initial: FormState = {
   guests: "2",
   attendingSangeet: "yes",
   attendingBarat: "yes",
-  food: "veg",
   message: "",
 };
 
@@ -165,23 +163,6 @@ export function RSVPForm() {
                     ]} />
                 </div>
 
-                <div className="mt-6">
-                  <Field label="Food Preference" icon={<UtensilsCrossed size={14} />}>
-                    <div className="mt-2 flex flex-wrap gap-3">
-                      {(["veg", "non-veg", "jain"] as const).map((opt) => (
-                        <button key={opt} type="button"
-                          onClick={() => setForm({ ...form, food: opt })}
-                          className={`rounded-full border px-5 py-2 font-serif text-sm capitalize tracking-wide transition ${
-                            form.food === opt
-                              ? "border-gold-foil bg-gold-foil/15 text-gold-shimmer shadow-[0_0_20px_rgba(212,175,55,0.15)]"
-                              : "border-gold-foil/25 text-ivory/70 hover:border-gold-foil/60"
-                          }`}>
-                          {opt === "non-veg" ? "Non-Veg" : opt}
-                        </button>
-                      ))}
-                    </div>
-                  </Field>
-                </div>
 
                 <div className="mt-6">
                   <Field label="Message for the Couple" icon={<Heart size={14} />}>

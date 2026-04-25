@@ -23,7 +23,6 @@ export const EVENTS = [
       "Family Performances",
       "DJ Night",
       "LED Dance Floor",
-      "Cocktail & Mocktail Zone",
       "Premium Selfie Booth",
     ],
   },
@@ -58,11 +57,11 @@ export const EVENTS = [
     accent: "burgundy",
     highlights: [
       "Grand Entry",
-      "Band Baaja · Shehnai",
-      "Horses & Luxury Car",
-      "Sky Fireworks",
-      "Family Procession",
+      "Traditional Music",
+      "Joyful Procession",
+      "Family Celebration",
       "Welcome Gate",
+      "Festive Feast",
     ],
   },
 ] as const;
